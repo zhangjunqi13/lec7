@@ -147,6 +147,18 @@ setup_user_paging()
 setup_kernel_paging()
 {
   //YOUR CODE: lec7-spoc challenge-part1
+  uint i, j, k;
+  
+  pg_dir=(int *)((((int)&pg_mem)+4095)&-4096);
+  pg_tbl[0]=pg_dir+1024;
+  for(i=1; i<16; ++i) pg_tbl[i]=pg_tbl[i-1]+1024;
+
+  for(i=0,j=KERSTART;i<16;i++,j+=PAGE*1024){
+    pg_dir[j>>22]=(uint)pg_tbl[i] | PTE_P | PTE_W;
+    for(k=0;k<1024;k++) 
+      pg_tbl[i][k]=(k<<12) | PTE_P | PTE_W;
+  }
+  pg_dir[0]=pg_dir[(uint)KERSTART>>22];
 }
 
 main()
@@ -201,5 +213,3 @@ main()
 
   halt(0);
 }
-Status API Training Shop Blog About Pricing
-© 2016 GitHub, Inc. Terms Privacy Security Contact Help
