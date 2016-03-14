@@ -1,19 +1,3 @@
-Skip to content
-This repository  
-Search
-Pull requests
-Issues
-Gist
- @zhangjunqi13
- Watch 2
-  Star 7
-  Fork 57 chyyuu/v9-cpu
- Code  Issues 0  Pull requests 1  Wiki  Pulse  Graphs
-Branch: master Find file Copy pathv9-cpu/root/usr/os/os5.c
-f3b838a  6 hours ago
-@chyyuu-tsinghua-cs chyyuu-tsinghua-cs add lec7 spoc challenge
-1 contributor
-RawBlameHistory     200 lines (169 sloc)  6.1 KB
 // os5.c -- 
 
 #include <u.h>
@@ -154,6 +138,10 @@ alltraps()
 setup_user_paging()
 {
   //YOUR CODE: lec7-spoc challenge-part2
+  pg_dir[256]=pg_dir[768+8];
+  for(int i=0;i<256;i++){
+   pg_tbl[8][i]|=PTE_U;
+  }
 }
   
 setup_kernel_paging()
